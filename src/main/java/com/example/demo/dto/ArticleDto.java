@@ -8,15 +8,17 @@ public class ArticleDto {
     private String libelle;
     private double prix;
     private String imageUrl;
+    private boolean enRupture;
 
     public ArticleDto() {
     }
 
-    public ArticleDto(Long id, String libelle, double prix, String imageUrl) {
+    public ArticleDto(Long id, String libelle, double prix, String imageUrl, boolean enRupture) {
         this.id = id;
         this.libelle = libelle;
         this.prix = prix;
         this.imageUrl = imageUrl;
+        this.enRupture = enRupture;
     }
 
     public Long getId() {
@@ -49,5 +51,13 @@ public class ArticleDto {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public boolean isEnRupture() {
+        return enRupture;
+    }
+
+    public void setEnRupture(boolean enRupture) {
+        this.enRupture = enRupture;
     }
 }

@@ -1,3 +1,4 @@
+
 # TP
 1° Compléter l'export export-articles.csv
 2° Ajout l'objet client (nom + prénom) 
@@ -6,6 +7,9 @@
 3° Réaliser l'export export-client.xlsx avec la mise en forme demandée (cf fichier export-clients.xlsx)
 4° Réaliser l'export total factures (cf fichier export-factures.xlsx)
 5° Réaliser l'export PDF d'une facture (format au choix)
+
+
+Modifier le initdata pour ajouter un ";" dans le libelle d'un article est adapté l'export article csv en conséquence.
 
 
 # Fonctionnement

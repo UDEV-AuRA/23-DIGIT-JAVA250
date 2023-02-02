@@ -8,7 +8,11 @@ import org.springframework.stereotype.Component;
 public class ArticleMapper {
 
     public ArticleDto articleDto(Article article) {
-        return new ArticleDto(article.getId(), article.getLibelle(), article.getPrix(), article.getImageUrl());
+        return new ArticleDto(article.getId(),
+                article.getLibelle(),
+                article.getPrix(),
+                article.getImageUrl(),
+                article.isEnRupture());
     }
 
 }

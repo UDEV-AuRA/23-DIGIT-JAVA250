@@ -21,6 +21,9 @@ public class Article {
     @Column
     private String imageUrl;
 
+    @Column
+    private Integer stock;
+
     public Long getId() {
         return id;
     }
@@ -51,5 +54,17 @@ public class Article {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    public boolean isEnRupture() {
+        return stock == 0;
     }
 }

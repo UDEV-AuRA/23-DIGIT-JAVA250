@@ -1,5 +1,6 @@
 package com.example.demo.controller.export;
 
+import com.example.demo.service.export.ExporArticleCSVService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,9 @@ import java.io.PrintWriter;
 @RequestMapping("export/articles")
 public class ExportArticleController {
 
+    @Autowired
+    private ExporArticleCSVService exporArticleCSVService;
+
     /**
      * Export des articles au format CSV.
      */
@@ -25,8 +29,9 @@ public class ExportArticleController {
         response.setContentType("text/csv");
         response.setHeader("Content-Disposition", "attachment; filename=\"export-articles.csv\"");
         PrintWriter writer = response.getWriter();
-        writer.println("Hello;world");
-        writer.println("Bonjour;");
+        exporArticleCSVService.generateCSV(writer);
     }
+
+
 
 }

@@ -10,4 +10,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
+ // List<Article> findByPrixLessThanEqual(int prix);
+
+ // List<Article> findByPrixLessThanEqualAndLibelleContains(int prix, String libelle);
+
+ // List<Article> findByPrixLessThanEqualAndLibelleContainsAndOrderByImageUrl(int prix, String libelle);
+
+ // //List<Article> findLesPasCher(int prix);
+
+ // @Query("FROM Article WHERE prix<= :prix")
+ // List<Article> findLesPasCher(int prix);
 }
