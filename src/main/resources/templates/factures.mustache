@@ -4,14 +4,16 @@
         <th>Désignation</th>
         <th>Quantité</th>
         <th>Prix unitaire</th>
+        <th>Prix ligne</th>
     </tr>
     </thead>
     <tbody>
     {{#ligneFactures}}
         <tr>
-            <td>{{article.libelle}}</td>
+            <td>{{designation}}</td>
             <td>{{quantite}}</td>
-            <td>{{article.prix}}</td>
+            <td>{{prixUnitaire}}</td>
+            <td>{{prix}}</td>
         </tr>
     {{/ligneFactures}}
     </tbody>

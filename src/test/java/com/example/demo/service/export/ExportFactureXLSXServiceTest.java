@@ -1,42 +1,36 @@
-package com.example.demo.service;
+package com.example.demo.service.export;
 
 import com.example.demo.entity.Article;
 import com.example.demo.entity.Client;
 import com.example.demo.entity.Facture;
 import com.example.demo.entity.LigneFacture;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import com.example.demo.repository.FactureRepository;
+import com.google.common.collect.Lists;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import javax.persistence.EntityManager;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
-/**
- * Classe permettant d'insérer des données dans l'application.
- */
-@Service
-@Transactional
-public class InitData implements ApplicationListener<ApplicationReadyEvent> {
+@RunWith(MockitoJUnitRunner.class)
+public class ExportFactureXLSXServiceTest {
 
-    private EntityManager entityManager;
+    @Mock
+    private FactureRepository factureRepository;
+    @InjectMocks
+    private ExportFactureXLSXService exportFactureXLSXService;
 
-    public InitData(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
-
-    @Override
-    public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-        insertTestData();
-    }
-
-    private void insertTestData() {
+    @Test
+    public void testGenerateXLSX() throws IOException {
+        // On a copier/coller le code de la classe InitData, il faudrait refactoriser !
         Article a1 = createArticle("Les conserves de viande de licorne", 22.98, "https://static.hitek.fr/img/actualite/2016/08/26/41gn6tpvqtl.jpg", 1);
         Article a2 = createArticle("Wenger Couteau suisse géant", 46.39, "https://static.hitek.fr/img/actualite/2016/08/26/61abqa-gt8s-sx522.jpg", 40);
         Article a3 = createArticle("PAPIER TOILETTE DONALD TRUMP", 4.99, "https://static.hitek.fr/img/actualite/2016/08/26/61cb4xnrbol-sx522.jpg", 100);
-        Article a4 = createArticle("Grattoir pour Chat en Forme de Platine de DJ", 23.14, "https://static.hitek.fr/img/actualite/2016/08/26/61grir, 20ay9-l-sx522.jpg", 100);
-        Article a5 = createArticle("Jay nothing", 2, "https://static.hitek.fr/img/actualite/2016/08/26/61vu-jqjygl-sy679.jpg", 0);
         Article a6 = createArticle("UN AFFINEUR DE VISAGE", 52, "https://static.hitek.fr/img/actualite/2016/08/26/w_41r-1yapf5l.jpg", 20);
 
         Client c1 = createClient("John", "Doe", LocalDate.of(1996, 4, 30));
@@ -54,6 +48,13 @@ public class InitData implements ApplicationListener<ApplicationReadyEvent> {
 
         Facture f3 = createFacture(true, LocalDate.of(2022, 2, 15), c2);
         LigneFacture lf31 = createLigneFacture(1, f3, a2);
+
+        Mockito.when(factureRepository.findAll()).thenReturn(Lists.newArrayList(f1, f2, f3));
+
+        FileOutputStream os = new FileOutputStream("./target/export-factures.xlsx");
+        exportFactureXLSXService.generateXLSX(os);
+        os.close();
+        // toujours pas d'assertion ici
     }
 
     private LigneFacture createLigneFacture(int quantite, Facture facture, Article article) {
@@ -61,7 +62,6 @@ public class InitData implements ApplicationListener<ApplicationReadyEvent> {
         ligneFacture.setQuantite(quantite);
         ligneFacture.setFacture(facture);
         ligneFacture.setArticle(article);
-        entityManager.persist(ligneFacture);
         facture.getLigneFactures().add(ligneFacture);
         return ligneFacture;
     }
@@ -71,7 +71,6 @@ public class InitData implements ApplicationListener<ApplicationReadyEvent> {
         facture.setPaye(isPaye);
         facture.setDateFinalisation(dateFinalisation);
         facture.setClient(client);
-        entityManager.persist(facture);
         return facture;
     }
 
@@ -80,7 +79,6 @@ public class InitData implements ApplicationListener<ApplicationReadyEvent> {
         client.setNom(nom);
         client.setPrenom(prenom);
         client.setDateNaissance(dateNaissance);
-        entityManager.persist(client);
         return client;
     }
 
@@ -90,7 +88,6 @@ public class InitData implements ApplicationListener<ApplicationReadyEvent> {
         a1.setPrix(prix);
         a1.setImageUrl(imageUrl);
         a1.setStock(stock);
-        entityManager.persist(a1);
         return a1;
     }
 }

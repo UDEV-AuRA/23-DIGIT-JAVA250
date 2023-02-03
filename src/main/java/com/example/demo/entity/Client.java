@@ -3,6 +3,7 @@ package com.example.demo.entity;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 
 /**
  * Entity représentant un Client.
@@ -22,6 +23,9 @@ public class Client {
 
     @Column
     private LocalDate dateNaissance;
+
+    @OneToMany(mappedBy = "client")
+    private List<Facture> factures;
 
     public Long getId() {
         return id;
@@ -57,5 +61,13 @@ public class Client {
 
     public Integer getAge(LocalDate dateDuJour) {
         return Period.between(dateNaissance, dateDuJour).getYears();
+    }
+
+    public List<Facture> getFactures() {
+        return factures;
+    }
+
+    public void setFactures(List<Facture> factures) {
+        this.factures = factures;
     }
 }
